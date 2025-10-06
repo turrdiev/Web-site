@@ -68,15 +68,15 @@
 
     // Если нужно сохранять выбор в сделке
     BX24.ready(() => {
-      reqSelect.addEventListener('change', () => {
-        const dealId = BX24.placement.info().options.ID;
-        BX24.callMethod(
-          'crm.deal.update',
-          { id: dealId, fields: { UF_CRM_1759607241: reqSelect.value } }, // замените на своё поле
-          (res) => console.log('Сохранено:', res)
-        );
-      });
-    });
+  reqSelect.addEventListener('change', () => {
+    const dealId = BX24.placement.info().options.ID;
+    BX24.callMethod(
+      'crm.deal.update',
+      { id: dealId, fields: { UF_CRM_1759607274: reqSelect.value } }, // ← твой правильный код поля
+      (res) => console.log('Сохранено:', res)
+    );
+  });
+});
   </script>
 </body>
 </html>
