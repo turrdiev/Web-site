@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "version": "1.0.0",
+  "name": {
+    "ru": "Связанный список СД 2"
+  },
+  "description": {
+    "ru": "Показывает типы заявок по выбранному департаменту"
+  },
+  "placement": {
+    "CRM_DEAL_DETAIL_TAB": {
+      "handler": "https://turrdiev.github.io/bitrix-widget/index.html",
+      "title": "Типы заявок по департаменту"
+    }
+  },
+  "rights": {
+    "placement": "W"
+  }
+}
