@@ -13,6 +13,7 @@
       "title": "Типы заявок по департаменту"
     }
   },
+  "scope": ["crm"],
   "rights": {
     "placement": "W"
   }
