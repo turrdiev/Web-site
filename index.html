@@ -1,42 +1,77 @@
-<script src="https://api.bitrix24.com/api/v1/"></script>
-<script>
-  const templates = {
-    it: ["Доступ к VPN", "Выдача техники", "Настройка Outlook"],
-    hr: ["Отпуск", "Больничный", "Командировка"],
-    marketing: ["Бриф", "Рекламная кампания", "Макет"]
-  };
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Связанные поля</title>
+  <script src="https://api.bitrix24.com/api/v1/"></script>
+</head>
+<body>
+  <label>Департамент</label>
+  <select id="department"></select>
 
-  const depSelect = document.getElementById('department');
-  const reqSelect = document.getElementById('requestType');
+  <label>Тип заявки</label>
+  <select id="requestType"></select>
 
-  depSelect.addEventListener('change', () => {
-    const dep = depSelect.value;
-    reqSelect.innerHTML = '';
+  <script>
+    let departments = {};
+    let templates = {};
+    const mapping = {
+      338: ["Доступ к VPN", "Выдача техники", "Настройка Outlook"], // IT
+      339: ["Отпуск", "Больничный", "Командировка"],                // HR
+      340: ["Бриф", "Рекламная кампания", "Макет"]                  // Маркетинг
+    };
 
-    if (!dep) {
-      reqSelect.innerHTML = '<option>Сначала выберите департамент</option>';
-      return;
-    }
+    BX24.ready(() => {
+      BX24.callMethod('crm.deal.userfield.list', {}, (res) => {
+        if (res.error()) {
+          console.error(res.error());
+          return;
+        }
 
-    templates[dep].forEach(t => {
-      const opt = document.createElement('option');
-      opt.value = t;
-      opt.textContent = t;
-      reqSelect.appendChild(opt);
-    });
-  });
+        const fields = res.data();
+        const depField = fields.find(f => f.FIELD_NAME === 'UF_CRM_1759607241');
+        const reqField = fields.find(f => f.FIELD_NAME === 'UF_CRM_1759607274');
 
-  BX24.ready(() => {
-    BX24.placement.info((info) => {
-      const dealId = info.options.ID;
+        // Заполним первый список — департаменты
+        const depSelect = document.getElementById('department');
+        depField.LIST.forEach(item => {
+          const opt = document.createElement('option');
+          opt.value = item.VALUE;
+          opt.textContent = item.VALUE;
+          depSelect.appendChild(opt);
+        });
 
-      reqSelect.addEventListener('change', () => {
-        BX24.callMethod(
-          'crm.deal.update',
-          { id: dealId, fields: { UF_CRM_1759607274: reqSelect.value } },
-          (res) => console.log('Сохранено:', res)
-        );
+        const reqSelect = document.getElementById('requestType');
+
+        depSelect.addEventListener('change', () => {
+          const selectedDep = depSelect.options[depSelect.selectedIndex].text;
+          reqSelect.innerHTML = '';
+          const depId = Object.keys(mapping).find(id => depField.LIST.find(i => i.VALUE === selectedDep && i.ID == id));
+
+          if (depId && mapping[depId]) {
+            mapping[depId].forEach(t => {
+              const opt = document.createElement('option');
+              opt.value = t;
+              opt.textContent = t;
+              reqSelect.appendChild(opt);
+            });
+          } else {
+            reqSelect.innerHTML = '<option>Нет шаблонов</option>';
+          }
+        });
+
+        BX24.placement.info((info) => {
+          const dealId = info.options.ID;
+          reqSelect.addEventListener('change', () => {
+            BX24.callMethod(
+              'crm.deal.update',
+              { id: dealId, fields: { UF_CRM_1759607274: reqSelect.value } },
+              (res) => console.log('Сохранено в сделку:', res)
+            );
+          });
+        });
       });
     });
-  });
-</script>
+  </script>
+</body>
+</html>
