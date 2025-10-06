@@ -72,7 +72,7 @@
         const dealId = BX24.placement.info().options.ID;
         BX24.callMethod(
           'crm.deal.update',
-          { id: dealId, fields: { UF_CRM_TYPE: reqSelect.value } }, // замените на своё поле
+          { id: dealId, fields: { UF_CRM_1759607241: reqSelect.value } }, // замените на своё поле
           (res) => console.log('Сохранено:', res)
         );
       });
