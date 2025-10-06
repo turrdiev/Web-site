@@ -9,7 +9,7 @@
   },
   "placement": {
     "CRM_DEAL_DETAIL_TAB": {
-      "handler": "https://turrdiev.github.io/bitrix-widget/index.html",
+      "handler": "https://turrdiev.github.io/Web-site/index.html",
       "title": "Типы заявок по департаменту"
     }
   },
