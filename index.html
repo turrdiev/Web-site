@@ -13,7 +13,7 @@
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+      background: linear-gradient(135deg, #e0eafc, #cfdef3);
       height: 100vh;
       display: flex;
       justify-content: center;
@@ -22,42 +22,48 @@
 
     .form-container {
       background: #ffffff;
-      padding: 50px 40px;
-      border-radius: 20px;
-      box-shadow: 0 16px 32px rgba(0,0,0,0.15);
-      width: 450px;
+      padding: 60px 50px;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      width: 500px;
       transition: all 0.3s ease;
     }
 
     .form-container:hover {
-      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      transform: translateY(-5px);
+      box-shadow: 0 28px 56px rgba(0,0,0,0.25);
     }
 
     label {
       display: block;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       font-weight: 700;
-      color: #333;
-      font-size: 16px;
+      color: #1f2937;
+      font-size: 18px;
     }
 
     select {
       width: 100%;
-      padding: 14px 16px;
-      margin-bottom: 25px;
-      border-radius: 12px;
-      border: 1px solid #ccc;
+      padding: 16px 18px;
+      margin-bottom: 30px;
+      border-radius: 14px;
+      border: 1px solid #d1d5db;
       font-size: 16px;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      font-weight: 500;
+      transition: all 0.3s ease;
       cursor: pointer;
-      background: #f9f9f9;
+      background: linear-gradient(145deg, #f9fafc, #ffffff);
+    }
+
+    select:hover {
+      border-color: #4a90e2;
     }
 
     select:focus {
       border-color: #4a90e2;
-      box-shadow: 0 0 8px rgba(74,144,226,0.4);
+      box-shadow: 0 0 12px rgba(74,144,226,0.3);
       outline: none;
-      background: #fff;
+      background: #ffffff;
     }
   </style>
 </head>
