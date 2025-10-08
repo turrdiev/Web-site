@@ -1,45 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <title>Зависимые поля</title>
   <script src="https://api.bitrix24.com/api/v1/"></script>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9fafb;
-      padding: 15px;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .form-container {
+      background: #ffffff;
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+      width: 350px;
+      transition: all 0.3s ease;
+    }
+
+    .form-container:hover {
+      box-shadow: 0 16px 32px rgba(0,0,0,0.2);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+      font-size: 14px;
+    }
+
     select {
       width: 100%;
-      padding: 6px;
-      margin-bottom: 10px;
-      border-radius: 6px;
+      padding: 10px 12px;
+      margin-bottom: 20px;
+      border-radius: 10px;
       border: 1px solid #ccc;
+      font-size: 14px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      background: #f9f9f9;
     }
-    label {
-      font-weight: 600;
-      display: block;
-      margin-bottom: 4px;
+
+    select:focus {
+      border-color: #4a90e2;
+      box-shadow: 0 0 6px rgba(74,144,226,0.4);
+      outline: none;
+      background: #fff;
     }
   </style>
 </head>
 <body>
-  <label for="department">Департамент</label>
-  <select id="department">
-    <option value="">Выберите департамент</option>
-    <option value="it">IT</option>
-    <option value="hr">HR</option>
-    <option value="marketing">Маркетинг</option>
-  </select>
+  <div class="form-container">
+    <label for="department">Департамент</label>
+    <select id="department">
+      <option value="">Выберите департамент</option>
+      <option value="it">IT</option>
+      <option value="hr">HR</option>
+      <option value="marketing">Маркетинг</option>
+    </select>
 
-  <label for="requestType">Тип заявки</label>
-  <select id="requestType">
-    <option value="">Сначала выберите департамент</option>
-  </select>
+    <label for="requestType">Тип заявки</label>
+    <select id="requestType">
+      <option value="">Сначала выберите департамент</option>
+    </select>
+  </div>
 
   <script>
-    // Список типов заявок по департаментам
     const templates = {
       it: ["Доступ к VPN", "Выдача техники", "Настройка Outlook"],
       hr: ["Отпуск", "Больничный", "Командировка"],
@@ -66,13 +104,13 @@
       });
     });
 
-    // Если нужно сохранять выбор в сделке
+    // Сохранение выбора в сделке
     BX24.ready(() => {
       reqSelect.addEventListener('change', () => {
         const dealId = BX24.placement.info().options.ID;
         BX24.callMethod(
           'crm.deal.update',
-          { id: dealId, fields: { UF_CRM_1759607241: reqSelect.value } }, // замените на своё поле
+          { id: dealId, fields: { UF_CRM_1759607241: reqSelect.value } },
           (res) => console.log('Сохранено:', res)
         );
       });
